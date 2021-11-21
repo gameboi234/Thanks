@@ -1,0 +1,35 @@
+roclen1 = input(5, minval=1, title =  "ROC #1")
+roclen2 = input(9, minval=1, title = "ROC #2")
+roclen3 = input(11, minval=1, title = "ROC #3")
+roclen4 = input(27, minval=1, title = "ROC #4")
+smalen1 = input(4, minval=1, title =  "SMA #1")
+smalen2 = input(10, minval=1, title = "SMA #2")
+smalen3 = input(15, minval=1, title = "SMA #3")
+smalen4 = input(25, minval=1, title = "SMA #4")
+siglen = input(15, minval=1, title = "Signal")
+
+smaroc(roclen, smalen) => rma(roc(close, roclen), smalen)
+kst = smaroc(roclen1, smalen1) + 2 * smaroc(roclen2, smalen2) + 3 * smaroc(roclen3, smalen3) + 4 * smaroc(roclen4, smalen4)
+sig = sma(kst, siglen)
+plot(kst*30, color=#009688, title="KST")
+plot(sig*30, color=#F44336, title="Signal")
+hline(0, title="Zero", color = #787B86)
+
+t = time(timeframe.period, "0800-1030")
+
+
+L = x and sig < 0  and sign > 21 and not istrend and t
+S = y and sig > 0  and sign > 21 and not istrend and t
+
+
+
+if L[2]
+    strategy.entry("L", strategy.long, alert_message = en)
+if S[2]
+    strategy.entry("S", strategy.short, alert_message = sh)
+
+if L1[1]
+    strategy.close("L",  alert_message = en)
+if S1[1]
+    strategy.close("S", alert_message = sh)    
+ 
