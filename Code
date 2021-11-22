@@ -17,19 +17,21 @@ hline(0, title="Zero", color = #787B86)
 
 t = time(timeframe.period, "0800-1030")
 
+x = crossover(kst, sig)
+y = crossunder(kst, sig)
+bool istrend = sign > 35
 
 L = x and sig < 0  and sign > 21 and not istrend and t
 S = y and sig > 0  and sign > 21 and not istrend and t
-
-
 
 if L[2]
     strategy.entry("L", strategy.long, alert_message = en)
 if S[2]
     strategy.entry("S", strategy.short, alert_message = sh)
-
-if L1[1]
+if L[1]
     strategy.close("L",  alert_message = en)
-if S1[1]
+if S[1]
     strategy.close("S", alert_message = sh)    
- 
+    
+plotchar(L[1]){{used this to debug}}
+plotchar(S[1]) {{used this to debug}}
